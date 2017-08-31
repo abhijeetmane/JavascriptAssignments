@@ -1,6 +1,7 @@
 ## JSAssignments
 ## This assignment assumes using ES5-ES6 JavaScript specifications, no frameworks.
-`
+
+```
 1. Solve the problem
 Task: you are given an array of elements. Show an alert popup with link index on click on each array element.
 
@@ -23,4 +24,6 @@ Architecture diagram could be UML-like;
 JS classes drafts;
 A detailed plan on building Access control system.
 
-`
+```
+
+## Estimations are provided in respective readme.md file

@@ -5,5 +5,8 @@ Multithreads
 Give explanations on how JavaScript is being run in browsers. How to achieve multithreading in code?
 
 ```
-##Javascript in sngle threaded but HTML5 has provided web workers to implement multithreading
-I will explain about this more during one to one interaction
+
+## Estimation: 1 SP
+
+## Javascript in sngle threaded but HTML5 has provided web workers to implement multithreading
+## I will explain about this more during one to one interaction
