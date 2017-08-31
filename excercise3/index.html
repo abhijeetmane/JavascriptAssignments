@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Image Fetcher</title>
+</head>
+<style>
+label {
+    margin-right: 10px;
+}
+
+.text {
+    width: 600px;
+    height: 35px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.submit {
+    display: block;
+    height: 35px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    padding: 5px;
+    background-color: #ccc;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td,
+th {
+    border: 1px solid #ccc;
+    margin-left: 0;
+}
+
+th {
+    background-color: #eee;
+}
+span {
+    color: red;
+    font-weight: bold;
+}
+</style>
+
+<body>
+    <form class="url-form" onsubmit="event.preventDefault(); fetchUrl();">
+        <label for="url">Url</label>
+        <input id="url" class="text" type="text" name="url" value="https://pixabay.com/en/photos/holland/" placeholder="http://www.abc.com">
+        <input class="submit" type="submit" name="submit" value="FetImages">
+    </form>
+    <div id="myDiv"></div>
+    <script type="text/javascript">
+    function fetchUrl() {
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", document.getElementById('url').value, true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange = function() {
+            if (xmlhttp.readyState == XMLHttpRequest.DONE) {
+                if (xmlhttp.status == 200) {
+                    const htmlObject = document.createElement('div');
+                    htmlObject.innerHTML = xmlhttp.responseText;
+
+                    const imgArr = htmlObject.getElementsByTagName("img"),
+                        objArr = [],
+                        divbox=document.createElement('div'),
+                        tbl = document.createElement("table"),
+                        tblBody = document.createElement("tbody"),
+                        tblHead = document.createElement("thead"),
+                        titleHeader = document.createElement("th"),
+                        urlHeader = document.createElement("th"),
+                        titleHeaderText = document.createTextNode('Image Title'),
+                        urlHeaderText = document.createTextNode('Image Url'),
+                        consoletxt=document.createElement('span'),
+                        consolevalue=document.createTextNode('check console for Array')
+
+                    consoletxt.appendChild(consolevalue);
+                    titleHeader.appendChild(titleHeaderText);
+                    urlHeader.appendChild(urlHeaderText);
+                    tblHead.appendChild(titleHeader);
+                    tblHead.appendChild(urlHeader);
+                    divbox.appendChild(consoletxt);
+                    tbl.appendChild(tblHead);
+                    document.getElementById("myDiv").appendChild(divbox);
+
+                    for (let i = 0; i < imgArr.length; i++) {
+                        if (imgArr[i] instanceof HTMLImageElement) {
+                            const row = document.createElement("tr"),
+                                title = document.createElement("td"),
+                                url = document.createElement("td"),
+                                titleText = document.createTextNode(imgArr[i].title || 'No Title Available'),
+                                urlText = document.createTextNode(imgArr[i].src);
+
+                            url.appendChild(urlText);
+                            title.appendChild(titleText);
+                            row.appendChild(title);
+                            row.appendChild(url);
+                            tblBody.appendChild(row);
+                            objArr.push({
+                                url: imgArr[i].href,
+                                title: imgArr[i].title || 'No Title Available'
+                            });
+                        }
+                        tbl.appendChild(tblBody);
+
+                        document.getElementById("myDiv").appendChild(tbl);
+                    }
+                    console.dir(objArr);
+                } else if (xmlhttp.status == 400) {
+                    alert('There was an error 400');
+                } else {
+                    alert('something else other than 200 was returned');
+                }
+            }
+        };
+
+    }
+    </script>
+</body>
+
+</html>
